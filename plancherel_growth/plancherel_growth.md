@@ -26,15 +26,15 @@ Let $\mathbb{Y}_N$ denote the set of Young diagrams with size $N$. Usually, a Yo
 
 ![result](Young_diagram.png)
 
-In analysis, the following rotated display is also useful:
+In analysis, the following rotated (and reflected) display is also useful:
 
 ![result](Young_diagram_russian.png)
 
-We assume that the edge length of each box is $\sqrt{2}$. The bold line is called the `profile` of a Young diagram $\lambda$. We denote by $x_1, x_2, \dots, x_r$ and $y_1, y_2, \dots, y_{r-1}$ the local minima and local maxima of the profile, respectively. By assumption, they are integers. Moreover, the interlacing inequalities 
+We assume that the edge length of each box is $\sqrt{2}$. The bold line is called the `profile` of a Young diagram $\lambda$. We denote by $x_1, x_2, \dots, x_r$ and $y_1, y_2, \dots, y_{r-1}$ the local minima and local maxima of the profile, respectively. By assumption, they are integers. Moreover, the following interlacing inequalities holds:
 $$
-x_1<y_1<x_2<\cdots <y_{r-1}<x_r
+x_1<y_1<x_2<\cdots <y_{r-1}<x_r.
 $$
-holds. We call them the `min-max coordinate` of $\lambda$. We remark that Young diagrams are implemented as those min-max coordinates in the coding below. The following characterization of min-max coordinates is known: An interlacing integers $x_1<y_1<x_2<\cdots <y_{r-1}<x_r$ is the min-max coordinate of some Young diagram if and only if 
+We call them the `min-max coordinate` of $\lambda$. We remark that Young diagrams are implemented as those min-max coordinates in the coding below. The following characterization of min-max coordinates is known: An interlacing integers $x_1<y_1<x_2<\cdots <y_{r-1}<x_r$ is the min-max coordinate of some Young diagram if and only if 
 $$
 \sum_{i=1}^rx_i-\sum_{i=1}^{r-1}y_i=0
 $$
@@ -100,7 +100,7 @@ def height_array (mins, maxs):
         tail = np.array([b, b - mins[-1] + maxs[-1]])
         return np.append(h, tail)
 ```
-Following the interval shrinkage algorithm, `add_point` function determines a  point where add a box to create a new Young diagram. This function is used in `plancherel_growth` function. In this function, `add_point` function first run, and then, using the result, the min-max coordinate of new Young diagram is computed.
+Following the interval shrinkage algorithm, `add_point` function determines a  point where add a box to create a new Young diagram. In `plancherel_growth` function, `add_point` function first run, and then, the min-max coordinate of new Young diagram is computed.
 ```python
 def add_point(mins, maxs):
     x_min = mins[0]
@@ -121,7 +121,6 @@ def add_point(mins, maxs):
 def plancherel_growth(mins, maxs):
     x_add = add_point(mins, maxs)
     i = np.count_nonzero(maxs < x_add)
-    # print(i)
     if(mins[i]-1 in maxs):
         new_maxs = np.sort(np.append(np.delete(maxs, i-1), mins[i]))
         new_mins = np.sort(np.append(np.delete(mins, i), mins[i]+1))
@@ -149,7 +148,7 @@ def limit_shape_sim (time, mins_origin, maxs_origin):
 result_diag = limit_shape_sim(SIM_TIME, MINS_ORIGIN, MAXS_ORIGIN)
 ```
 ## Result
-We can display the resulting Young diagram.
+We can display the resulting (scaled) Young diagram. 
 ```python
 x_axis = x_axis_func(result_diag[0], result_diag[1]) * (1.0/np.sqrt(SIM_TIME))
 height = height_array(result_diag[0], result_diag[1]) * (1.0/np.sqrt(SIM_TIME))
@@ -162,7 +161,8 @@ plt.plot(x_axis, height, color="blue")
 plt.plot([-2.5, 0, 2.5], [2.5, 0, 2.5], color="black")
 plt.plot(x_sample, vkls, color="red")
 ```
-We obtain the following image.
+We can obtain the following image and can compare the scaled profile and the Vershik--Kerov--Logan--Shepp curve.
+
 ![result](pg_1000.png)
 
 If we want to see an aspects of growth and convergence to the limit shape, we can create a gif image as follows.
@@ -201,4 +201,5 @@ plt.show()
 ```
 
 We obtain the following gif image.
+
 ![result](plancherel_growth.gif)
