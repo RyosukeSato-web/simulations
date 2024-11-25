@@ -28,7 +28,7 @@ Let $\mathbb{Y}_N$ denote the set of Young diagrams with size $N$. Usually, a Yo
 
 In analysis, the following rotated (and reflected) display is also useful:
 
-![result](Young_diagram_russian.png)
+![result](young_diagram_russian.png)
 
 We assume that the edge length of each box is $\sqrt{2}$. The bold line is called the `profile` of a Young diagram $\lambda$. We denote by $x_1, x_2, \dots, x_r$ and $y_1, y_2, \dots, y_{r-1}$ the local minima and local maxima of the profile, respectively. By assumption, they are integers. Moreover, the following interlacing inequalities holds:
 $$
